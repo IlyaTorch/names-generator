@@ -2,22 +2,22 @@ import torch
 import os
 
 from random import sample
-from CharRNNCell import rnn_loop, CharRNNCell
-from words_preparing import lines_to_matrix, read_names, get_unique_tokens, get_token_id_dict
+from model.CharRNNCell import rnn_loop, CharRNNCell
+from model.words_preparing import lines_to_matrix, read_names, get_unique_tokens, get_token_id_dict
 
 
 def save_model(model):
     name = str(model.__class__)
     name = name[name.find('.')+1:name.find(">")-1]
 
-    path = f"resources/checkpoint_{name}.pth"
+    path = f"model/resources/checkpoint_{name}.pth"
 
     model_state = {
                     'model_name': name,
                     'net': model.state_dict(),
                 }
-    if not os.path.isdir('resources/'):
-        os.mkdir('resources/')
+    if not os.path.isdir('../resources/'):
+        os.mkdir('../resources/')
     torch.save(model_state, path)
 
 
@@ -48,7 +48,7 @@ def train(lines, token_to_id, model, optimizer, num_epoch=1000):
 
 
 if __name__ == '__main__':
-    lines = read_names('resources/names.txt')
+    lines = read_names('model/resources/names.txt')
     tokens = get_unique_tokens(lines)
     token_to_id = get_token_id_dict(tokens)
 

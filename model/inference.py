@@ -2,8 +2,8 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
-from CharRNNCell import CharRNNCell
-from words_preparing import read_names, get_unique_tokens, get_token_id_dict
+from model.CharRNNCell import CharRNNCell
+from model.words_preparing import read_names, get_unique_tokens, get_token_id_dict
 
 
 def generate_sample(char_rnn, tokens, token_to_id, max_length, seed_phrase=' ',
@@ -37,7 +37,7 @@ def inference(seed_phrase=' ', num_examples=5, path='resources/names.txt'):
     max_length = max(map(len, lines))
 
     char_rnn = CharRNNCell(len(tokens))
-    checkpoint = torch.load("resources/checkpoint_CharRNNCell.pth")
+    checkpoint = torch.load('resources/checkpoint_CharRNNCell.pth')
     char_rnn.load_state_dict(checkpoint['net'])
 
     samples = [generate_sample(char_rnn, tokens, token_to_id, max_length, seed_phrase) for _ in range(num_examples)]
