@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
-from forms import NameForm
 from model.inference import inference
+from forms import NameForm
+
 app = Flask(__name__)
 
 
