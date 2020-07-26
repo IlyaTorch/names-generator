@@ -1,0 +1,19 @@
+version: "3"
+services:
+  web:
+    build: .
+    expose:
+      - 5001
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_DEBUG=0
+      - PYTHONUNBUFFERED=True
+    command: gunicorn  -b 0.0.0.0:5001 app:app --reload
+  nginx:
+    build: ./nginx
+    ports:
+      - "5001:5001"
+    depends_on:
+      - web
